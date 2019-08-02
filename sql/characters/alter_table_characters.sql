@@ -1,0 +1,1 @@
+ALTER TABLE `characters` ADD COLUMN `army_rank` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' AFTER `deleteDate`;
