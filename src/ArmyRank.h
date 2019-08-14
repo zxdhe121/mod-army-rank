@@ -13,10 +13,6 @@ private:
 public:
 	static ArmyRank* instance();
 
-	// Global
-		uint8 GetArmyRankMAX() { return Army_Rank_MAX; }
-		void SetArmyRankMAX(uint8 v) { Army_Rank_MAX = v; }
-
 	// Players
 		uint8 GetPlayerRank(uint64 v) { return PlayerRank[v]; }
 		void SetPlayerRank(uint64 player_GUID, uint8 rank, bool update_DB);
@@ -29,9 +25,6 @@ public:
 	// Public Tables
 	std::unordered_map<uint64, uint8> PlayerRank;
 	std::unordered_map<uint32, uint8> ItemRank;
-private:
-	// Local Variables
-    uint8 Army_Rank_MAX;
 };
 
 #define sArmyRank ArmyRank::instance()
