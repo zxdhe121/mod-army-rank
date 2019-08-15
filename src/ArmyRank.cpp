@@ -5,8 +5,14 @@
 #include "player.h"
 #include "ScriptMgr.h"
 #include "Log.h"
-#include "Language.h"
 #include <unordered_map>
+
+enum {
+    LANG_ARMY_RANK_BUY_ITEM_ERROR = 60001,
+    LANG_ARMY_RANK_INFO = 60002,
+    LANG_ARMY_RANK_USE_ITEM_ERROR = 60003,
+    LANG_ARMY_RANK_LEVEL_UP = 60004,
+};
 
 ArmyRank::ArmyRank() { }
 
