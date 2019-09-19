@@ -163,7 +163,7 @@ SELECT '61091',
 	WHEN '1'  THEN '3'
 	WHEN '3'  THEN '4'
 	ELSE '5' END)
-,entry,'0','0','0','0' FROM item_template WHERE `name` LIKE '角斗士的%' AND (itemLevel BETWEEN 101 AND 199) 
+,entry,'0','0','0','0' FROM item_template WHERE `name` LIKE '角斗士的%' AND (itemLevel BETWEEN 101 AND 130) 
 AND ((`class` = 4 AND `InventoryType` IN(10,5,20,7,1,3,14,23,28)) OR `class` = 2) 
 AND entry <1000000;
 
