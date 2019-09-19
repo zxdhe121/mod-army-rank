@@ -12,6 +12,7 @@ enum {
     LANG_ARMY_RANK_INFO = 60002,
     LANG_ARMY_RANK_USE_ITEM_ERROR = 60003,
     LANG_ARMY_RANK_LEVEL_UP = 60004,
+    ARMY_RANK_NAME_INDEX = 60100,
 };
 
 ArmyRank::ArmyRank() { }
@@ -63,7 +64,7 @@ void ArmyRank::SetPlayerRank(uint64 player_guid, uint8 rank, bool update_DB)
 {
 	sArmyRank->PlayerRank[player_guid] = rank;
 	if(update_DB){
-        CharacterDatabase.PExecute("UPDATE characters SET `army_rank`='%u' WHERE `guid`='%u';", sArmyRank->PlayerRank[player_guid], player_guid);
+        CharacterDatabase.PExecute("UPDATE characters SET army_rank = %u WHERE guid = %u ;", sArmyRank->PlayerRank[player_guid], player_guid);
     }
 
 }
@@ -75,7 +76,7 @@ public: ArmyRank_Player_Script() : PlayerScript("ArmyRank_Player_Script") { };
 		void OnLogin(Player* player)
 		{
 		    uint64 playerGUID = player->GetGUID();
-			QueryResult PlayerQuery = CharacterDatabase.PQuery("SELECT `army_rank` FROM characters WHERE `guid`='%u';", playerGUID);
+			QueryResult PlayerQuery = CharacterDatabase.PQuery("SELECT army_rank FROM characters WHERE guid = %u ;", playerGUID);
             Field* fields = PlayerQuery->Fetch();
             uint8 rank = fields[0].GetUInt8();
             // Save the DB values to the MyData object
@@ -104,7 +105,7 @@ public: ArmyRank_Info_Show_Script() : ItemScript("ArmyRank_Info_Show_Script") { 
 			uint8 rank = sArmyRank->GetPlayerRank(playerGUID);
 
 			ChatHandler(player->GetSession()).PSendSysMessage("**********************************");
-			ChatHandler(player->GetSession()).PSendSysMessage(LANG_ARMY_RANK_INFO, rank);
+			ChatHandler(player->GetSession()).PSendSysMessage(LANG_ARMY_RANK_INFO, (player->GetSession()->GetTrinityString(ARMY_RANK_NAME_INDEX + rank)), rank);
 			ChatHandler(player->GetSession()).PSendSysMessage("**********************************");
 			return true;
 		}
@@ -127,7 +128,7 @@ public: ArmyRank_Up_Script() : ItemScript("ArmyRank_Up_Script") { };
 				
 			player->DestroyItemCount(item->GetEntry(), 1, true);
 
-			ChatHandler(player->GetSession()).PSendSysMessage(LANG_ARMY_RANK_LEVEL_UP, (playerRank + 1));
+			ChatHandler(player->GetSession()).PSendSysMessage(LANG_ARMY_RANK_LEVEL_UP, (player->GetSession()->GetTrinityString(ARMY_RANK_NAME_INDEX + playerRank + 1)), (playerRank + 1));
 			return true;
 		}
 };
