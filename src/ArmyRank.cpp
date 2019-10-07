@@ -73,7 +73,7 @@ class ArmyRank_Player_Script : public PlayerScript
 {
 public: ArmyRank_Player_Script() : PlayerScript("ArmyRank_Player_Script") { };
 
-		void OnLogin(Player* player)
+		void OnLoadFromDB(Player* player)
 		{
 		    uint64 playerGUID = player->GetGUID();
 			QueryResult PlayerQuery = CharacterDatabase.PQuery("SELECT army_rank FROM characters WHERE guid = %u ;", playerGUID);
@@ -81,6 +81,11 @@ public: ArmyRank_Player_Script() : PlayerScript("ArmyRank_Player_Script") { };
             uint8 rank = fields[0].GetUInt8();
             // Save the DB values to the MyData object
             sArmyRank->SetPlayerRank(playerGUID, rank, false);
+
+            //bonus talent points
+            if(rank && rank > 0){
+                player->RewardOtherBonusTalentPoints(rank);
+            }
 		}
 
         bool OnBeforeBuyItemFromVendor(Player* player, uint64 /*vendorguid*/, uint32 /*vendorslot*/, uint32& item, uint8 /*count*/, uint8 /*bag*/, uint8 /*slot*/) {
@@ -125,7 +130,9 @@ public: ArmyRank_Up_Script() : ItemScript("ArmyRank_Up_Script") { };
                 return false;
             }
 			sArmyRank->SetPlayerRank(playerGUID, playerRank + 1, true);
-				
+
+            player->RewardOtherBonusTalentPoints(1);
+            player->InitTalentForLevel();
 			player->DestroyItemCount(item->GetEntry(), 1, true);
 
 			ChatHandler(player->GetSession()).PSendSysMessage(LANG_ARMY_RANK_LEVEL_UP, (player->GetSession()->GetTrinityString(ARMY_RANK_NAME_INDEX + playerRank + 1)), (playerRank + 1));
