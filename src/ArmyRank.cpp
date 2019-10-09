@@ -4,6 +4,7 @@
 #include "chat.h"
 #include "player.h"
 #include "ScriptMgr.h"
+#include "ScriptedGossip.h"
 #include "Log.h"
 #include <unordered_map>
 
@@ -13,6 +14,24 @@ enum {
     LANG_ARMY_RANK_USE_ITEM_ERROR = 60003,
     LANG_ARMY_RANK_LEVEL_UP = 60004,
     ARMY_RANK_NAME_INDEX = 60100,
+
+    LANG_ARMY_RANK_VENDOR_OPTION_S1 = 60011,
+    LANG_ARMY_RANK_VENDOR_OPTION_S2 = 60012,
+    LANG_ARMY_RANK_VENDOR_OPTION_S3 = 60013,
+    LANG_ARMY_RANK_VENDOR_OPTION_S4 = 60014,
+    LANG_ARMY_RANK_VENDOR_OPTION_VETERAN = 60015,
+    LANG_ARMY_RANK_VENDOR_OPTION_VINDICATOR = 60016,
+    LANG_ARMY_RANK_VENDOR_OPTION_GUARDIAN = 60017,
+    LANG_ARMY_RANK_VENDOR_OPTION_CLOSE = 60018,
+    LANG_ARMY_RANK_VENDOR_OPTION_RETURN = 60019,
+
+    ARMY_RANK_VENDOR_REAL_ENTRY_S1 = 61091,
+    ARMY_RANK_VENDOR_REAL_ENTRY_S2 = 61092,
+    ARMY_RANK_VENDOR_REAL_ENTRY_S3 = 61093,
+    ARMY_RANK_VENDOR_REAL_ENTRY_S4 = 61094,
+    ARMY_RANK_VENDOR_REAL_ENTRY_VETERAN = 61080,
+    ARMY_RANK_VENDOR_REAL_ENTRY_VINDICATOR = 61081,
+    ARMY_RANK_VENDOR_REAL_ENTRY_GUARDIAN = 61082,
 };
 
 ArmyRank::ArmyRank() { }
@@ -140,10 +159,75 @@ public: ArmyRank_Up_Script() : ItemScript("ArmyRank_Up_Script") { };
 		}
 };
 
+
+class ArmyRank_season_vendor_Script : public CreatureScript
+{
+public:
+    ArmyRank_season_vendor_Script() : CreatureScript("ArmyRank_season_vendor_Script") { }
+
+    bool OnGossipHello(Player* player, Creature* creature)
+    {
+        sendMainMenu(player);
+        player->SEND_GOSSIP_MENU(1, creature->GetGUID());
+        return true;
+    }
+
+    void sendMainMenu(Player* player)
+    {
+        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S1), GOSSIP_SENDER_MAIN, 1);
+        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S2), GOSSIP_SENDER_MAIN, 2);
+        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S3), GOSSIP_SENDER_MAIN, 3);
+        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S4), GOSSIP_SENDER_MAIN, 4);
+        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_VETERAN), GOSSIP_SENDER_MAIN, 5);
+        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_VINDICATOR), GOSSIP_SENDER_MAIN, 6);
+        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_GUARDIAN), GOSSIP_SENDER_MAIN, 7);
+        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_CLOSE), GOSSIP_SENDER_MAIN, 99);
+    }
+
+    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
+    {
+        player->PlayerTalkClass->ClearMenus();
+
+        switch (action)
+        {
+        case 1:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_S1);
+            break;
+
+        case 2:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_S2);
+            break;
+
+        case 3:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_S3);
+            break;
+
+        case 4:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_S4);
+            break;
+
+        case 5:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_VETERAN);
+            break;
+
+        case 6:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_VINDICATOR);
+            break;
+
+        case 7:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_GUARDIAN);
+            break;
+        }
+        player->CLOSE_GOSSIP_MENU();
+        return true;
+    }
+};
+
 void AddSC_ArmyRank()
 {
 	new ArmyRank_Load_Config;
 	new ArmyRank_Player_Script;
 	new ArmyRank_Info_Show_Script;
 	new ArmyRank_Up_Script;
+    new ArmyRank_season_vendor_Script;
 }
