@@ -32,6 +32,35 @@ enum {
     ARMY_RANK_VENDOR_REAL_ENTRY_VETERAN = 61080,
     ARMY_RANK_VENDOR_REAL_ENTRY_VINDICATOR = 61081,
     ARMY_RANK_VENDOR_REAL_ENTRY_GUARDIAN = 61082,
+
+
+    LANG_ARMY_HEROIC_VENDOR_OPTION_S1 = 60031,
+    LANG_ARMY_HEROIC_VENDOR_OPTION_S2 = 60032,
+    LANG_ARMY_HEROIC_VENDOR_OPTION_S3 = 60033,
+    LANG_ARMY_HEROIC_VENDOR_OPTION_S4 = 60034,
+    LANG_ARMY_HEROIC_VENDOR_OPTION_VETERAN = 60035,
+    LANG_ARMY_HEROIC_VENDOR_OPTION_VINDICATOR = 60036,
+    LANG_ARMY_HEROIC_VENDOR_OPTION_GUARDIAN = 60037,
+    LANG_ARMY_HEROIC_VENDOR_OPTION_CLOSE = 60038,
+    LANG_ARMY_HEROIC_VENDOR_OPTION_RETURN = 60039,
+
+    ARMY_HEROIC_VENDOR_REAL_ENTRY_S1 = 61095,
+    ARMY_HEROIC_VENDOR_REAL_ENTRY_S2 = 61096,
+    ARMY_HEROIC_VENDOR_REAL_ENTRY_S3 = 61097,
+    ARMY_HEROIC_VENDOR_REAL_ENTRY_S4 = 61098,
+    ARMY_HEROIC_VENDOR_REAL_ENTRY_VETERAN = 61076,
+    ARMY_HEROIC_VENDOR_REAL_ENTRY_VINDICATOR = 61077,
+    ARMY_HEROIC_VENDOR_REAL_ENTRY_GUARDIAN = 61078,
+
+
+    LANG_ARMY_VENDOR_OTHERS_OPTION_RANKUP = 60201,
+    LANG_ARMY_VENDOR_OTHERS_OPTION_SHIRT = 60202,
+    LANG_ARMY_VENDOR_OTHERS_OPTION_CONVERT = 60203,
+    LANG_ARMY_VENDOR_OTHERS_OPTION_CLOSE = 600204,
+
+    ARMY_VENDOR_OTHERS_REAL_ENTRY__RANKUP = 61089,
+    ARMY_VENDOR_OTHERS_REAL_ENTRY_SHIRT = 61090,
+    ARMY_VENDOR_OTHERS_REAL_ENTRY_CONVERT = 61079,
 };
 
 ArmyRank::ArmyRank() { }
@@ -167,21 +196,21 @@ public:
 
     bool OnGossipHello(Player* player, Creature* creature)
     {
-        sendMainMenu(player);
-        player->SEND_GOSSIP_MENU(1, creature->GetGUID());
+        sendMainMenu(player, creature);
         return true;
     }
 
-    void sendMainMenu(Player* player)
+    void sendMainMenu(Player* player, Creature* creature)
     {
-        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S1), GOSSIP_SENDER_MAIN, 1);
-        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S2), GOSSIP_SENDER_MAIN, 2);
-        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S3), GOSSIP_SENDER_MAIN, 3);
-        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S4), GOSSIP_SENDER_MAIN, 4);
-        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_VETERAN), GOSSIP_SENDER_MAIN, 5);
-        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_VINDICATOR), GOSSIP_SENDER_MAIN, 6);
-        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_GUARDIAN), GOSSIP_SENDER_MAIN, 7);
-        player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_CLOSE), GOSSIP_SENDER_MAIN, 99);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S1), GOSSIP_SENDER_MAIN, 1);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S2), GOSSIP_SENDER_MAIN, 2);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S3), GOSSIP_SENDER_MAIN, 3);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_S4), GOSSIP_SENDER_MAIN, 4);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_VETERAN), GOSSIP_SENDER_MAIN, 5);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_VINDICATOR), GOSSIP_SENDER_MAIN, 6);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_GUARDIAN), GOSSIP_SENDER_MAIN, 7);
+        player->ADD_GOSSIP_ITEM(0, player->GetSession()->GetTrinityString(LANG_ARMY_RANK_VENDOR_OPTION_CLOSE), GOSSIP_SENDER_MAIN, 99);
+        player->SEND_GOSSIP_MENU(1, creature->GetGUID());
     }
 
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
@@ -217,11 +246,130 @@ public:
         case 7:
             player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_GUARDIAN);
             break;
+
+        default:
+            break;
         }
         player->CLOSE_GOSSIP_MENU();
         return true;
     }
 };
+
+class ArmyRank_season_vendor_heroic_Script : public CreatureScript
+{
+public:
+    ArmyRank_season_vendor_heroic_Script() : CreatureScript("ArmyRank_season_vendor_heroic_Script") { }
+
+    bool OnGossipHello(Player* player, Creature* creature)
+    {
+        sendMainMenu(player, creature);
+        return true;
+    }
+
+    void sendMainMenu(Player* player, Creature* creature)
+    {
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_HEROIC_VENDOR_OPTION_S1), GOSSIP_SENDER_MAIN, 1);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_HEROIC_VENDOR_OPTION_S2), GOSSIP_SENDER_MAIN, 2);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_HEROIC_VENDOR_OPTION_S3), GOSSIP_SENDER_MAIN, 3);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_HEROIC_VENDOR_OPTION_S4), GOSSIP_SENDER_MAIN, 4);
+        //player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_HEROIC_VENDOR_OPTION_VETERAN), GOSSIP_SENDER_MAIN, 5);
+        //player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_HEROIC_VENDOR_OPTION_VINDICATOR), GOSSIP_SENDER_MAIN, 6);
+        //player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetTrinityString(LANG_ARMY_HEROIC_VENDOR_OPTION_GUARDIAN), GOSSIP_SENDER_MAIN, 7);
+        player->ADD_GOSSIP_ITEM(0, player->GetSession()->GetTrinityString(LANG_ARMY_HEROIC_VENDOR_OPTION_CLOSE), GOSSIP_SENDER_MAIN, 99);
+        player->SEND_GOSSIP_MENU(1, creature->GetGUID());
+    }
+
+    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
+    {
+        player->PlayerTalkClass->ClearMenus();
+
+        switch (action)
+        {
+        case 1:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_S1);
+            break;
+
+        case 2:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_S2);
+            break;
+
+        case 3:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_S3);
+            break;
+
+        case 4:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_S4);
+            break;
+
+
+            /*
+            case 5:
+                player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_VETERAN);
+                break;
+
+            case 6:
+                player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_VINDICATOR);
+                break;
+
+            case 7:
+                player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_GUARDIAN);
+                break;
+             */
+
+        default:
+            break;
+        }
+        player->CLOSE_GOSSIP_MENU();
+        return true;
+    }
+};
+
+class ArmyRank_vendor_others_Script : public CreatureScript
+{
+public:
+    ArmyRank_vendor_others_Script() : CreatureScript("ArmyRank_vendor_others_Script") { }
+
+    bool OnGossipHello(Player* player, Creature* creature)
+    {
+        sendMainMenu(player, creature);
+        return true;
+    }
+
+    void sendMainMenu(Player* player, Creature* creature)
+    {
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_VENDOR_OTHERS_OPTION_RANKUP), GOSSIP_SENDER_MAIN, 1);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_VENDOR_OTHERS_OPTION_SHIRT), GOSSIP_SENDER_MAIN, 2);
+        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetTrinityString(LANG_ARMY_VENDOR_OTHERS_OPTION_CONVERT), GOSSIP_SENDER_MAIN, 3);
+        player->ADD_GOSSIP_ITEM(0, player->GetSession()->GetTrinityString(LANG_ARMY_VENDOR_OTHERS_OPTION_CLOSE), GOSSIP_SENDER_MAIN, 99);
+        player->SEND_GOSSIP_MENU(1, creature->GetGUID());
+    }
+
+    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
+    {
+        player->PlayerTalkClass->ClearMenus();
+
+        switch (action)
+        {
+        case 1:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_VENDOR_OTHERS_REAL_ENTRY__RANKUP);
+            break;
+
+        case 2:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_VENDOR_OTHERS_REAL_ENTRY_SHIRT);
+            break;
+
+        case 3:
+            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_VENDOR_OTHERS_REAL_ENTRY_CONVERT);
+            break;
+
+        default:
+            break;
+        }
+        player->CLOSE_GOSSIP_MENU();
+        return true;
+    }
+};
+
 
 void AddSC_ArmyRank()
 {
@@ -230,4 +378,6 @@ void AddSC_ArmyRank()
 	new ArmyRank_Info_Show_Script;
 	new ArmyRank_Up_Script;
     new ArmyRank_season_vendor_Script;
+    new ArmyRank_season_vendor_heroic_Script;
+    new ArmyRank_vendor_others_Script;
 }
