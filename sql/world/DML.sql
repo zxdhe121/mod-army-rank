@@ -1,34 +1,34 @@
 -- 游戏内文字
-insert into `trinity_string` (`entry`, `content_default`) values('60001','|cff3333FF您未达到物品需要的军衔等级。您的军衔等级: %u，物品需要的军衔等级: %u');
-insert into `trinity_string` (`entry`, `content_default`) values('60002','您现在的军衔为 %s，军衔等级为 %u');
-insert into `trinity_string` (`entry`, `content_default`) values('60003','|cff3333FF无法使用该物品提升您的军衔等级。您的军衔等级: %u，可使用该物品的军衔等级: %u');
-insert into `trinity_string` (`entry`, `content_default`) values('60004','军衔等级提升！获得1点天赋！您现在的军衔为 %s，军衔等级为 %u');
-insert into `trinity_string` (`entry`, `content_default`) values('60100','预备役');
-insert into `trinity_string` (`entry`, `content_default`) values('60101','新兵');
-insert into `trinity_string` (`entry`, `content_default`) values('60102','上等兵');
-insert into `trinity_string` (`entry`, `content_default`) values('60103','下士');
-insert into `trinity_string` (`entry`, `content_default`) values('60104','中士');
-insert into `trinity_string` (`entry`, `content_default`) values('60105','上士');
-insert into `trinity_string` (`entry`, `content_default`) values('60106','三等军士长');
-insert into `trinity_string` (`entry`, `content_default`) values('60107','二等军士长');
-insert into `trinity_string` (`entry`, `content_default`) values('60108','一等军士长');
-insert into `trinity_string` (`entry`, `content_default`) values('60109','总军士长');
-insert into `trinity_string` (`entry`, `content_default`) values('60110','四等准尉');
-insert into `trinity_string` (`entry`, `content_default`) values('60111','三等准尉');
-insert into `trinity_string` (`entry`, `content_default`) values('60112','二等准尉');
-insert into `trinity_string` (`entry`, `content_default`) values('60113','一等准尉');
-insert into `trinity_string` (`entry`, `content_default`) values('60114','少尉');
-insert into `trinity_string` (`entry`, `content_default`) values('60115','中尉');
-insert into `trinity_string` (`entry`, `content_default`) values('60116','上尉');
-insert into `trinity_string` (`entry`, `content_default`) values('60117','少校');
-insert into `trinity_string` (`entry`, `content_default`) values('60118','中校');
-insert into `trinity_string` (`entry`, `content_default`) values('60119','上校');
-insert into `trinity_string` (`entry`, `content_default`) values('60120','准将');
-insert into `trinity_string` (`entry`, `content_default`) values('60121','少将');
-insert into `trinity_string` (`entry`, `content_default`) values('60122','中将');
-insert into `trinity_string` (`entry`, `content_default`) values('60123','上将');
-insert into `trinity_string` (`entry`, `content_default`) values('60124','五星上将');
-insert into `trinity_string` (`entry`, `content_default`) values('60125','元帅');
+insert into `acore_string` (`entry`, `content_default`) values('60001','|cff3333FF您未达到物品需要的军衔等级。您的军衔等级: %u，物品需要的军衔等级: %u');
+insert into `acore_string` (`entry`, `content_default`) values('60002','您现在的军衔为 %s，军衔等级为 %u');
+insert into `acore_string` (`entry`, `content_default`) values('60003','|cff3333FF无法使用该物品提升您的军衔等级。您的军衔等级: %u，可使用该物品的军衔等级: %u');
+insert into `acore_string` (`entry`, `content_default`) values('60004','军衔等级提升！获得1点天赋！您现在的军衔为 %s，军衔等级为 %u');
+insert into `acore_string` (`entry`, `content_default`) values('60100','预备役');
+insert into `acore_string` (`entry`, `content_default`) values('60101','新兵');
+insert into `acore_string` (`entry`, `content_default`) values('60102','上等兵');
+insert into `acore_string` (`entry`, `content_default`) values('60103','下士');
+insert into `acore_string` (`entry`, `content_default`) values('60104','中士');
+insert into `acore_string` (`entry`, `content_default`) values('60105','上士');
+insert into `acore_string` (`entry`, `content_default`) values('60106','三等军士长');
+insert into `acore_string` (`entry`, `content_default`) values('60107','二等军士长');
+insert into `acore_string` (`entry`, `content_default`) values('60108','一等军士长');
+insert into `acore_string` (`entry`, `content_default`) values('60109','总军士长');
+insert into `acore_string` (`entry`, `content_default`) values('60110','四等准尉');
+insert into `acore_string` (`entry`, `content_default`) values('60111','三等准尉');
+insert into `acore_string` (`entry`, `content_default`) values('60112','二等准尉');
+insert into `acore_string` (`entry`, `content_default`) values('60113','一等准尉');
+insert into `acore_string` (`entry`, `content_default`) values('60114','少尉');
+insert into `acore_string` (`entry`, `content_default`) values('60115','中尉');
+insert into `acore_string` (`entry`, `content_default`) values('60116','上尉');
+insert into `acore_string` (`entry`, `content_default`) values('60117','少校');
+insert into `acore_string` (`entry`, `content_default`) values('60118','中校');
+insert into `acore_string` (`entry`, `content_default`) values('60119','上校');
+insert into `acore_string` (`entry`, `content_default`) values('60120','准将');
+insert into `acore_string` (`entry`, `content_default`) values('60121','少将');
+insert into `acore_string` (`entry`, `content_default`) values('60122','中将');
+insert into `acore_string` (`entry`, `content_default`) values('60123','上将');
+insert into `acore_string` (`entry`, `content_default`) values('60124','五星上将');
+insert into `acore_string` (`entry`, `content_default`) values('60125','元帅');
 
 -- 军衔查看用物品及军衔升级用物品
 insert into `item_template` (`entry`, `class`, `subclass`, `SoundOverrideSubclass`, `name`, `displayid`, `Quality`, `Flags`, `FlagsExtra`, `BuyCount`, `BuyPrice`, `SellPrice`, `InventoryType`, `AllowableClass`, `AllowableRace`, `ItemLevel`, `RequiredLevel`, `RequiredSkill`, `RequiredSkillRank`, `requiredspell`, `requiredhonorrank`, `RequiredCityRank`, `RequiredReputationFaction`, `RequiredReputationRank`, `maxcount`, `stackable`, `ContainerSlots`, `StatsCount`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`, `stat_type3`, `stat_value3`, `stat_type4`, `stat_value4`, `stat_type5`, `stat_value5`, `stat_type6`, `stat_value6`, `stat_type7`, `stat_value7`, `stat_type8`, `stat_value8`, `stat_type9`, `stat_value9`, `stat_type10`, `stat_value10`, `ScalingStatDistribution`, `ScalingStatValue`, `dmg_min1`, `dmg_max1`, `dmg_type1`, `dmg_min2`, `dmg_max2`, `dmg_type2`, `armor`, `holy_res`, `fire_res`, `nature_res`, `frost_res`, `shadow_res`, `arcane_res`, `delay`, `ammo_type`, `RangedModRange`, `spellid_1`, `spelltrigger_1`, `spellcharges_1`, `spellppmRate_1`, `spellcooldown_1`, `spellcategory_1`, `spellcategorycooldown_1`, `spellid_2`, `spelltrigger_2`, `spellcharges_2`, `spellppmRate_2`, `spellcooldown_2`, `spellcategory_2`, `spellcategorycooldown_2`, `spellid_3`, `spelltrigger_3`, `spellcharges_3`, `spellppmRate_3`, `spellcooldown_3`, `spellcategory_3`, `spellcategorycooldown_3`, `spellid_4`, `spelltrigger_4`, `spellcharges_4`, `spellppmRate_4`, `spellcooldown_4`, `spellcategory_4`, `spellcategorycooldown_4`, `spellid_5`, `spelltrigger_5`, `spellcharges_5`, `spellppmRate_5`, `spellcooldown_5`, `spellcategory_5`, `spellcategorycooldown_5`, `bonding`, `description`, `PageText`, `LanguageID`, `PageMaterial`, `startquest`, `lockid`, `Material`, `sheath`, `RandomProperty`, `RandomSuffix`, `block`, `itemset`, `MaxDurability`, `area`, `Map`, `BagFamily`, `TotemCategory`, `socketColor_1`, `socketContent_1`, `socketColor_2`, `socketContent_2`, `socketColor_3`, `socketContent_3`, `socketBonus`, `GemProperties`, `RequiredDisenchantSkill`, `ArmorDamageModifier`, `duration`, `ItemLimitCategory`, `HolidayId`, `ScriptName`, `DisenchantID`, `FoodType`, `minMoneyLoot`, `maxMoneyLoot`, `flagsCustom`, `VerifiedBuild`, `army_rank`) values('6100003','0','4','-1','军衔奖章','4841','4','0','0','1','0','0','0','-1','-1','100','70','0','0','0','0','0','0','0','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','18282','0','0','0','0','0','-1','0','0','0','0','-1','0','-1','0','0','0','0','-1','0','-1','0','0','0','0','-1','0','-1','0','0','0','0','-1','0','-1','1','点击可查看自己的军衔信息','0','0','0','0','0','7','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','-1','0','0','0','0','ArmyRank_Info_Show_Script','0','0','0','0','0','0','0');
@@ -134,7 +134,7 @@ UPDATE item_template SET army_rank = 24 WHERE `name` LIKE '野蛮角斗士的%' 
 -- 更新军装的说明信息
 UPDATE item_template SET description = 
 	CONCAT('需要军衔：',
-	(SELECT ts.`content_default` FROM trinity_string ts WHERE ts.`entry` = (60100 + army_rank)),
+	(SELECT ts.`content_default` FROM acore_string ts WHERE ts.`entry` = (60100 + army_rank)),
 	'，对应的军衔等级：',
 	army_rank)
 WHERE 1=1
@@ -249,7 +249,7 @@ update item_template set flags = '4096' where entry between 6100011 and 6100035;
 
 UPDATE item_template SET description = 
 	CONCAT('需要军衔：',
-	(SELECT ts.`content_default` FROM trinity_string ts WHERE ts.`entry` = (60100 + army_rank)),
+	(SELECT ts.`content_default` FROM acore_string ts WHERE ts.`entry` = (60100 + army_rank)),
 	'，对应的军衔等级：',
 	army_rank)
 WHERE 1=1
@@ -268,30 +268,30 @@ SELECT '61090',((@rownum:=@rownum+1)-1),entry,'0','0','0','0' FROM (SELECT @rown
 WHERE t.entry BETWEEN 6100111 AND 6100135
 ORDER BY t.entry ASC;
 
-insert into `trinity_string` (`entry`, `content_default`) values('60011','|TInterface\\icons\\achievement_pvp_p_01:30:30:-18|t S1-角斗士装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60012','|TInterface\\icons\\achievement_pvp_p_02:30:30:-18|t S2-残酷角斗士装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60013','|TInterface\\icons\\achievement_pvp_p_03:30:30:-18|t S3-复仇角斗士装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60014','|TInterface\\icons\\achievement_pvp_p_04:30:30:-18|t S4-野蛮角斗士装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60015','|TInterface\\icons\\inv_jewelry_stormpiketrinket_01:30:30:-18|t 老兵级别装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60016','|TInterface\\icons\\inv_jewelry_stormpiketrinket_03:30:30:-18|t 守备官级别装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60017','|TInterface\\icons\\inv_jewelry_stormpiketrinket_05:30:30:-18|t 护卫者级别装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60018','|TInterface\\icons\\ability_rogue_sprint:30:30:-18|t 退出');
-insert into `trinity_string` (`entry`, `content_default`) values('60019','|TInterface\\icons\\achievement_bg_returnxflags_def_wsg:30:30:-18|t 返回...');
+insert into `acore_string` (`entry`, `content_default`) values('60011','|TInterface\\icons\\achievement_pvp_p_01:30:30:-18|t S1-角斗士装备');
+insert into `acore_string` (`entry`, `content_default`) values('60012','|TInterface\\icons\\achievement_pvp_p_02:30:30:-18|t S2-残酷角斗士装备');
+insert into `acore_string` (`entry`, `content_default`) values('60013','|TInterface\\icons\\achievement_pvp_p_03:30:30:-18|t S3-复仇角斗士装备');
+insert into `acore_string` (`entry`, `content_default`) values('60014','|TInterface\\icons\\achievement_pvp_p_04:30:30:-18|t S4-野蛮角斗士装备');
+insert into `acore_string` (`entry`, `content_default`) values('60015','|TInterface\\icons\\inv_jewelry_stormpiketrinket_01:30:30:-18|t 老兵级别装备');
+insert into `acore_string` (`entry`, `content_default`) values('60016','|TInterface\\icons\\inv_jewelry_stormpiketrinket_03:30:30:-18|t 守备官级别装备');
+insert into `acore_string` (`entry`, `content_default`) values('60017','|TInterface\\icons\\inv_jewelry_stormpiketrinket_05:30:30:-18|t 护卫者级别装备');
+insert into `acore_string` (`entry`, `content_default`) values('60018','|TInterface\\icons\\ability_rogue_sprint:30:30:-18|t 退出');
+insert into `acore_string` (`entry`, `content_default`) values('60019','|TInterface\\icons\\achievement_bg_returnxflags_def_wsg:30:30:-18|t 返回...');
 
-insert into `trinity_string` (`entry`, `content_default`) values('60031','|TInterface\\icons\\achievement_pvp_p_01:30:30:-18|t S1-角斗士英雄级别装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60032','|TInterface\\icons\\achievement_pvp_p_02:30:30:-18|t S2-残酷角斗士英雄级别装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60033','|TInterface\\icons\\achievement_pvp_p_03:30:30:-18|t S3-复仇角斗士英雄级别装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60034','|TInterface\\icons\\achievement_pvp_p_04:30:30:-18|t S4-野蛮角斗士英雄级别装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60035','|TInterface\\icons\\inv_jewelry_stormpiketrinket_01:30:30:-18|t 老兵英雄级别装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60036','|TInterface\\icons\\inv_jewelry_stormpiketrinket_03:30:30:-18|t 守备官英雄级别装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60037','|TInterface\\icons\\inv_jewelry_stormpiketrinket_05:30:30:-18|t 护卫者英雄级别装备');
-insert into `trinity_string` (`entry`, `content_default`) values('60038','|TInterface\\icons\\ability_rogue_sprint:30:30:-18|t 退出');
-insert into `trinity_string` (`entry`, `content_default`) values('60039','|TInterface\\icons\\achievement_bg_returnxflags_def_wsg:30:30:-18|t 返回...');
+insert into `acore_string` (`entry`, `content_default`) values('60031','|TInterface\\icons\\achievement_pvp_p_01:30:30:-18|t S1-角斗士英雄级别装备');
+insert into `acore_string` (`entry`, `content_default`) values('60032','|TInterface\\icons\\achievement_pvp_p_02:30:30:-18|t S2-残酷角斗士英雄级别装备');
+insert into `acore_string` (`entry`, `content_default`) values('60033','|TInterface\\icons\\achievement_pvp_p_03:30:30:-18|t S3-复仇角斗士英雄级别装备');
+insert into `acore_string` (`entry`, `content_default`) values('60034','|TInterface\\icons\\achievement_pvp_p_04:30:30:-18|t S4-野蛮角斗士英雄级别装备');
+insert into `acore_string` (`entry`, `content_default`) values('60035','|TInterface\\icons\\inv_jewelry_stormpiketrinket_01:30:30:-18|t 老兵英雄级别装备');
+insert into `acore_string` (`entry`, `content_default`) values('60036','|TInterface\\icons\\inv_jewelry_stormpiketrinket_03:30:30:-18|t 守备官英雄级别装备');
+insert into `acore_string` (`entry`, `content_default`) values('60037','|TInterface\\icons\\inv_jewelry_stormpiketrinket_05:30:30:-18|t 护卫者英雄级别装备');
+insert into `acore_string` (`entry`, `content_default`) values('60038','|TInterface\\icons\\ability_rogue_sprint:30:30:-18|t 退出');
+insert into `acore_string` (`entry`, `content_default`) values('60039','|TInterface\\icons\\achievement_bg_returnxflags_def_wsg:30:30:-18|t 返回...');
 
-insert into `trinity_string` (`entry`, `content_default`) values('60201','提升军衔');
-insert into `trinity_string` (`entry`, `content_default`) values('60202','军衔衬衣');
-insert into `trinity_string` (`entry`, `content_default`) values('60203','荣誉兑换');
-insert into `trinity_string` (`entry`, `content_default`) values('600204','退出');
+insert into `acore_string` (`entry`, `content_default`) values('60201','提升军衔');
+insert into `acore_string` (`entry`, `content_default`) values('60202','军衔衬衣');
+insert into `acore_string` (`entry`, `content_default`) values('60203','荣誉兑换');
+insert into `acore_string` (`entry`, `content_default`) values('600204','退出');
 
 
 -- 综合军装商人 61088
