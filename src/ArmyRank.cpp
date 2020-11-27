@@ -13,54 +13,7 @@ enum {
     LANG_ARMY_RANK_INFO = 60002,
     LANG_ARMY_RANK_USE_ITEM_ERROR = 60003,
     LANG_ARMY_RANK_LEVEL_UP = 60004,
-    ARMY_RANK_NAME_INDEX = 60100,
 
-    LANG_ARMY_RANK_VENDOR_OPTION_S1 = 60011,
-    LANG_ARMY_RANK_VENDOR_OPTION_S2 = 60012,
-    LANG_ARMY_RANK_VENDOR_OPTION_S3 = 60013,
-    LANG_ARMY_RANK_VENDOR_OPTION_S4 = 60014,
-    LANG_ARMY_RANK_VENDOR_OPTION_VETERAN = 60015,
-    LANG_ARMY_RANK_VENDOR_OPTION_VINDICATOR = 60016,
-    LANG_ARMY_RANK_VENDOR_OPTION_GUARDIAN = 60017,
-    LANG_ARMY_RANK_VENDOR_OPTION_CLOSE = 60018,
-    LANG_ARMY_RANK_VENDOR_OPTION_RETURN = 60019,
-
-    ARMY_RANK_VENDOR_REAL_ENTRY_S1 = 61091,
-    ARMY_RANK_VENDOR_REAL_ENTRY_S2 = 61092,
-    ARMY_RANK_VENDOR_REAL_ENTRY_S3 = 61093,
-    ARMY_RANK_VENDOR_REAL_ENTRY_S4 = 61094,
-    ARMY_RANK_VENDOR_REAL_ENTRY_VETERAN = 61080,
-    ARMY_RANK_VENDOR_REAL_ENTRY_VINDICATOR = 61081,
-    ARMY_RANK_VENDOR_REAL_ENTRY_GUARDIAN = 61082,
-
-
-    LANG_ARMY_HEROIC_VENDOR_OPTION_S1 = 60031,
-    LANG_ARMY_HEROIC_VENDOR_OPTION_S2 = 60032,
-    LANG_ARMY_HEROIC_VENDOR_OPTION_S3 = 60033,
-    LANG_ARMY_HEROIC_VENDOR_OPTION_S4 = 60034,
-    LANG_ARMY_HEROIC_VENDOR_OPTION_VETERAN = 60035,
-    LANG_ARMY_HEROIC_VENDOR_OPTION_VINDICATOR = 60036,
-    LANG_ARMY_HEROIC_VENDOR_OPTION_GUARDIAN = 60037,
-    LANG_ARMY_HEROIC_VENDOR_OPTION_CLOSE = 60038,
-    LANG_ARMY_HEROIC_VENDOR_OPTION_RETURN = 60039,
-
-    ARMY_HEROIC_VENDOR_REAL_ENTRY_S1 = 61095,
-    ARMY_HEROIC_VENDOR_REAL_ENTRY_S2 = 61096,
-    ARMY_HEROIC_VENDOR_REAL_ENTRY_S3 = 61097,
-    ARMY_HEROIC_VENDOR_REAL_ENTRY_S4 = 61098,
-    ARMY_HEROIC_VENDOR_REAL_ENTRY_VETERAN = 61076,
-    ARMY_HEROIC_VENDOR_REAL_ENTRY_VINDICATOR = 61077,
-    ARMY_HEROIC_VENDOR_REAL_ENTRY_GUARDIAN = 61078,
-
-
-    LANG_ARMY_VENDOR_OTHERS_OPTION_RANKUP = 60201,
-    LANG_ARMY_VENDOR_OTHERS_OPTION_SHIRT = 60202,
-    LANG_ARMY_VENDOR_OTHERS_OPTION_CONVERT = 60203,
-    LANG_ARMY_VENDOR_OTHERS_OPTION_CLOSE = 600204,
-
-    ARMY_VENDOR_OTHERS_REAL_ENTRY__RANKUP = 61089,
-    ARMY_VENDOR_OTHERS_REAL_ENTRY_SHIRT = 61090,
-    ARMY_VENDOR_OTHERS_REAL_ENTRY_CONVERT = 61079,
 };
 
 ArmyRank::ArmyRank() { }
@@ -136,18 +89,9 @@ public: ArmyRank_Player_Script() : PlayerScript("ArmyRank_Player_Script") { };
             }
         }
 
-        bool OnBeforeBuyItemFromVendor(Player* player, uint64 /*vendorguid*/, uint32 /*vendorslot*/, uint32& item, uint8 /*count*/, uint8 /*bag*/, uint8 /*slot*/) {
-            uint8 playerRank = sArmyRank->GetPlayerRank(player->GetGUID());
-            uint8 itemRank = sArmyRank->GetItemRank(item);
-            if (itemRank > playerRank) {
-                player->GetSession()->SendAreaTriggerMessage(player->GetSession()->GetAcoreString(LANG_ARMY_RANK_BUY_ITEM_ERROR), playerRank, itemRank);
-                return false;
-            }
-            return true;
-        }
-
 };
 
+//当前角色军衔等级查看
 class ArmyRank_Info_Show_Script : public ItemScript
 {
 public: ArmyRank_Info_Show_Script() : ItemScript("ArmyRank_Info_Show_Script") { };
@@ -158,12 +102,13 @@ public: ArmyRank_Info_Show_Script() : ItemScript("ArmyRank_Info_Show_Script") { 
             uint8 rank = sArmyRank->GetPlayerRank(playerGUID);
 
             ChatHandler(player->GetSession()).PSendSysMessage("**********************************");
-            ChatHandler(player->GetSession()).PSendSysMessage(LANG_ARMY_RANK_INFO, (player->GetSession()->GetAcoreString(ARMY_RANK_NAME_INDEX + rank)), rank);
+            ChatHandler(player->GetSession()).PSendSysMessage(LANG_ARMY_RANK_INFO, rank);
             ChatHandler(player->GetSession()).PSendSysMessage("**********************************");
             return true;
         }
 };
 
+//军衔升级
 class ArmyRank_Up_Script : public ItemScript
 {
 public: ArmyRank_Up_Script() : ItemScript("ArmyRank_Up_Script") { };
@@ -183,215 +128,9 @@ public: ArmyRank_Up_Script() : ItemScript("ArmyRank_Up_Script") { };
             player->InitTalentForLevel();
             player->DestroyItemCount(item->GetEntry(), 1, true);
             player->CastSpell(player, 31726);//视觉效果
-            ChatHandler(player->GetSession()).PSendSysMessage(LANG_ARMY_RANK_LEVEL_UP, (player->GetSession()->GetAcoreString(ARMY_RANK_NAME_INDEX + playerRank + 1)), (playerRank + 1));
+            ChatHandler(player->GetSession()).PSendSysMessage(LANG_ARMY_RANK_LEVEL_UP, (playerRank + 1));
             return true;
         }
-};
-
-
-class ArmyRank_season_vendor_Script : public CreatureScript
-{
-public:
-    ArmyRank_season_vendor_Script() : CreatureScript("ArmyRank_season_vendor_Script") { }
-
-    bool OnGossipHello(Player* player, Creature* creature)
-    {
-        sendMainMenu(player, creature);
-        return true;
-    }
-
-    void sendMainMenu(Player* player, Creature* creature)
-    {
-        uint8 arenaSeason = sWorld->getIntConfig(CONFIG_ARENA_SEASON_ID);
-        if (arenaSeason >= 1) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_RANK_VENDOR_OPTION_S1), GOSSIP_SENDER_MAIN, 1);
-        }
-        if (arenaSeason >= 2) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_RANK_VENDOR_OPTION_S2), GOSSIP_SENDER_MAIN, 2);
-        }
-        if (arenaSeason >= 3) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_RANK_VENDOR_OPTION_S3), GOSSIP_SENDER_MAIN, 3);
-        }
-        if (arenaSeason >= 4) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_RANK_VENDOR_OPTION_S4), GOSSIP_SENDER_MAIN, 4);
-        }
-        if (arenaSeason >= 1) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_RANK_VENDOR_OPTION_VETERAN), GOSSIP_SENDER_MAIN, 5);
-        }
-        if (arenaSeason >= 3) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_RANK_VENDOR_OPTION_VINDICATOR), GOSSIP_SENDER_MAIN, 6);
-        }
-        if (arenaSeason >= 4) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_RANK_VENDOR_OPTION_GUARDIAN), GOSSIP_SENDER_MAIN, 7);
-        }
-        player->ADD_GOSSIP_ITEM(0, player->GetSession()->GetAcoreString(LANG_ARMY_RANK_VENDOR_OPTION_CLOSE), GOSSIP_SENDER_MAIN, 99);
-        player->SEND_GOSSIP_MENU(1, creature->GetGUID());
-    }
-
-    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
-    {
-        player->PlayerTalkClass->ClearMenus();
-
-        switch (action)
-        {
-        case 1:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_S1);
-            break;
-
-        case 2:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_S2);
-            break;
-
-        case 3:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_S3);
-            break;
-
-        case 4:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_S4);
-            break;
-
-        case 5:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_VETERAN);
-            break;
-
-        case 6:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_VINDICATOR);
-            break;
-
-        case 7:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_RANK_VENDOR_REAL_ENTRY_GUARDIAN);
-            break;
-
-        default:
-            break;
-        }
-        player->CLOSE_GOSSIP_MENU();
-        return true;
-    }
-};
-
-class ArmyRank_season_vendor_heroic_Script : public CreatureScript
-{
-public:
-    ArmyRank_season_vendor_heroic_Script() : CreatureScript("ArmyRank_season_vendor_heroic_Script") { }
-
-    bool OnGossipHello(Player* player, Creature* creature)
-    {
-        sendMainMenu(player, creature);
-        return true;
-    }
-
-    void sendMainMenu(Player* player, Creature* creature)
-    {
-        uint8 arenaSeason = sWorld->getIntConfig(CONFIG_ARENA_SEASON_ID);
-        if (arenaSeason >= 1) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_HEROIC_VENDOR_OPTION_S1), GOSSIP_SENDER_MAIN, 1);
-        }
-        if (arenaSeason >= 2) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_HEROIC_VENDOR_OPTION_S2), GOSSIP_SENDER_MAIN, 2);
-        }
-        if (arenaSeason >= 3) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_HEROIC_VENDOR_OPTION_S3), GOSSIP_SENDER_MAIN, 3);
-        }
-        if (arenaSeason >= 4) {
-            player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_HEROIC_VENDOR_OPTION_S4), GOSSIP_SENDER_MAIN, 4);
-        }
-        //player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetAcoreString(LANG_ARMY_HEROIC_VENDOR_OPTION_VETERAN), GOSSIP_SENDER_MAIN, 5);
-        //player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetAcoreString(LANG_ARMY_HEROIC_VENDOR_OPTION_VINDICATOR), GOSSIP_SENDER_MAIN, 6);
-        //player->ADD_GOSSIP_ITEM(10, player->GetSession()->GetAcoreString(LANG_ARMY_HEROIC_VENDOR_OPTION_GUARDIAN), GOSSIP_SENDER_MAIN, 7);
-        player->ADD_GOSSIP_ITEM(0, player->GetSession()->GetAcoreString(LANG_ARMY_HEROIC_VENDOR_OPTION_CLOSE), GOSSIP_SENDER_MAIN, 99);
-        player->SEND_GOSSIP_MENU(1, creature->GetGUID());
-    }
-
-    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
-    {
-        player->PlayerTalkClass->ClearMenus();
-
-        switch (action)
-        {
-        case 1:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_S1);
-            break;
-
-        case 2:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_S2);
-            break;
-
-        case 3:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_S3);
-            break;
-
-        case 4:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_S4);
-            break;
-
-
-            /*
-            case 5:
-                player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_VETERAN);
-                break;
-
-            case 6:
-                player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_VINDICATOR);
-                break;
-
-            case 7:
-                player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_HEROIC_VENDOR_REAL_ENTRY_GUARDIAN);
-                break;
-             */
-
-        default:
-            break;
-        }
-        player->CLOSE_GOSSIP_MENU();
-        return true;
-    }
-};
-
-class ArmyRank_vendor_others_Script : public CreatureScript
-{
-public:
-    ArmyRank_vendor_others_Script() : CreatureScript("ArmyRank_vendor_others_Script") { }
-
-    bool OnGossipHello(Player* player, Creature* creature)
-    {
-        sendMainMenu(player, creature);
-        return true;
-    }
-
-    void sendMainMenu(Player* player, Creature* creature)
-    {
-        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_VENDOR_OTHERS_OPTION_RANKUP), GOSSIP_SENDER_MAIN, 1);
-        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_VENDOR_OTHERS_OPTION_SHIRT), GOSSIP_SENDER_MAIN, 2);
-        player->ADD_GOSSIP_ITEM(1, player->GetSession()->GetAcoreString(LANG_ARMY_VENDOR_OTHERS_OPTION_CONVERT), GOSSIP_SENDER_MAIN, 3);
-        player->ADD_GOSSIP_ITEM(0, player->GetSession()->GetAcoreString(LANG_ARMY_VENDOR_OTHERS_OPTION_CLOSE), GOSSIP_SENDER_MAIN, 99);
-        player->SEND_GOSSIP_MENU(1, creature->GetGUID());
-    }
-
-    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
-    {
-        player->PlayerTalkClass->ClearMenus();
-
-        switch (action)
-        {
-        case 1:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_VENDOR_OTHERS_REAL_ENTRY__RANKUP);
-            break;
-
-        case 2:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_VENDOR_OTHERS_REAL_ENTRY_SHIRT);
-            break;
-
-        case 3:
-            player->GetSession()->SendListInventoryCustom(creature->GetGUID(), ARMY_VENDOR_OTHERS_REAL_ENTRY_CONVERT);
-            break;
-
-        default:
-            break;
-        }
-        player->CLOSE_GOSSIP_MENU();
-        return true;
-    }
 };
 
 
@@ -401,7 +140,4 @@ void AddSC_ArmyRank()
     new ArmyRank_Player_Script;
     new ArmyRank_Info_Show_Script;
     new ArmyRank_Up_Script;
-    new ArmyRank_season_vendor_Script;
-    new ArmyRank_season_vendor_heroic_Script;
-    new ArmyRank_vendor_others_Script;
 }
