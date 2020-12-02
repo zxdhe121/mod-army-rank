@@ -85,7 +85,7 @@ public: ArmyRank_Player_Script() : PlayerScript("ArmyRank_Player_Script") { };
 
             //bonus talent points
             if (rank && rank > 0) {
-                player->RewardOtherBonusTalentPoints(rank);
+                player->RewardExtraBonusTalentPoints(rank);
             }
         }
 
@@ -124,7 +124,7 @@ public: ArmyRank_Up_Script() : ItemScript("ArmyRank_Up_Script") { };
             }
             sArmyRank->SetPlayerRank(playerGUID, playerRank + 1, true);
 
-            player->RewardOtherBonusTalentPoints(1);
+            player->RewardExtraBonusTalentPoints(1);
             player->InitTalentForLevel();
             player->DestroyItemCount(item->GetEntry(), 1, true);
             player->CastSpell(player, 31726);//视觉效果
